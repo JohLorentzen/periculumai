@@ -12,6 +12,7 @@ import {
 import { Menu, MoveRight, X } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import ModeToggle from "@/components/ui/mode-toggle";
 
 export const Header = () => {
   const navigationItems = [
@@ -124,9 +125,7 @@ export const Header = () => {
           <p className="font-semibold">Fehirde</p>
         </div>
         <div className="flex justify-end w-full gap-4">
-          <Button variant="ghost" className="hidden md:inline">
-            Hjelp
-          </Button>
+          <ModeToggle />
           <div className="border-r hidden md:inline"></div>
           <Button variant="outline">Logg in</Button>
           <Button>Kom i gang</Button>
