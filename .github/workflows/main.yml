@@ -62,7 +62,7 @@ jobs:
 
       - name: Set permissions on the server
         run: |
-          echo ${{ secrets.DEPLOY_PASSWORD }} | sshpass -p ${{ secrets.DEPLOY_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} 'echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S chown -R ${{ secrets.DEPLOY_USER }}:www-data /var/www/kristofferlorentzen && echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S chmod -R 775 /var/www/kristofferlorentzen'
+          echo ${{ secrets.DEPLOY_PASSWORD }} | sshpass -p ${{ secrets.DEPLOY_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} 'echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S chown -R ${{ secrets.DEPLOY_USER }}:www-data /var/www/periculumai && echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S chmod -R 775 /var/www/periculumai'
 
       - name: Deploy to server
         run: |
@@ -70,7 +70,7 @@ jobs:
           LOCAL_PROJECT_PATH="$(pwd)"
           REMOTE_USER="${{ secrets.DEPLOY_USER }}"
           REMOTE_HOST="${{ secrets.DEPLOY_HOST }}"
-          REMOTE_PROJECT_PATH="/var/www/kristofferlorentzen"
+          REMOTE_PROJECT_PATH="/var/www/periculumai"
           SSH_PASS="${{ secrets.DEPLOY_PASSWORD }}"
           # Sync files to the server using rsync with increased verbosity and timeout
           echo "Starting rsync..."
