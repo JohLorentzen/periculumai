@@ -3,78 +3,71 @@ import Link from "next/link";
 export const Footer = () => {
   const navigationItems = [
     {
-      title: "Home",
+      title: "Hjem",
       href: "/",
       description: "",
     },
     {
-      title: "Product",
-      description: "Managing a small business today is already tough.",
+      title: "Produkter",
+      description: "Tjenester vi tilbyr",
       items: [
         {
-          title: "Reports",
-          href: "/reports",
+          title: "Kunstig Intelligens",
+          href: "/KI",
         },
         {
-          title: "Statistics",
-          href: "/statistics",
+          title: "Overblikk",
+          href: "/overblikk",
         },
         {
-          title: "Dashboards",
+          title: "Dashbord",
           href: "/dashboards",
-        },
-        {
-          title: "Recordings",
-          href: "/recordings",
         },
       ],
     },
     {
-      title: "Company",
-      description: "Managing a small business today is already tough.",
+      title: "Selskap",
+      description: "Intressert i vår visjon",
       items: [
         {
-          title: "About us",
-          href: "/about",
+          title: "Om oss",
+          href: "/omoss",
         },
         {
-          title: "Fundraising",
-          href: "/fundraising",
+          title: "Tidslinje",
+          href: "/tidslinje",
         },
         {
-          title: "Investors",
-          href: "/investors",
+          title: "Investor",
+          href: "/investor",
         },
-        {
-          title: "Contact us",
-          href: "/contact",
-        },
+    
       ],
     },
   ];
 
   return (
-    <div className="w-full py-20 lg:py-40 bg-foreground text-background">
+    <div className="w-full py-20 lg:py-40 bg-muted text-background">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           <div className="flex gap-8 flex-col items-start">
             <div className="flex gap-2 flex-col">
               <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-left">
-                TWBlocks™
+                Fehirde™
               </h2>
               <p className="text-lg max-w-lg leading-relaxed tracking-tight text-background/75 text-left">
-                Managing a small business today is already tough.
+                Personlig, effektiv profersjonell tjenester for din formue
               </p>
             </div>
             <div className="flex gap-20 flex-row">
               <div className="flex flex-col text-sm max-w-lg leading-relaxed tracking-tight text-background/75 text-left">
-                <p>1 Tailwind Way</p>
-                <p>Menlo Park</p>
-                <p>CA 94025</p>
+                <p></p>
+                <p></p>
+                <p></p>
               </div>
               <div className="flex flex-col text-sm max-w-lg leading-relaxed tracking-tight text-background/75 text-left">
-                <Link href="/">Terms of service</Link>
-                <Link href="/">Privacy Policy</Link>
+                <Link href="/">Brukervilkår</Link>
+                <Link href="/">Personvern</Link>
               </div>
             </div>
           </div>
