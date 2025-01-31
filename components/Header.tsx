@@ -23,46 +23,35 @@ export const Header = () => {
     },
     {
       title: "Produkter",
-      description: "Managing a small business today is already tough.",
+      description: "Tjenester vi tilbyr",
       items: [
         {
-          title: "Reports",
-          href: "/reports",
+          title: "Kunstig Intelligens",
+          href: "/ki",
         },
         {
-          title: "Statistics",
-          href: "/statistics",
-        },
-        {
-          title: "Dashboards",
+          title: "Dashbord",
           href: "/dashboards",
-        },
-        {
-          title: "Recordings",
-          href: "/recordings",
         },
       ],
     },
     {
-      title: "Company",
-      description: "Managing a small business today is already tough.",
+      title: "Selskap",
+      description: "Intressert i vår visjon",
       items: [
         {
-          title: "About us",
-          href: "/about",
+          title: "Om oss",
+          href: "/omoss",
         },
         {
-          title: "Fundraising",
-          href: "/fundraising",
+          title: "Tidslinje",
+          href: "/tidslinje",
         },
         {
           title: "Investor",
-          href: "/investors",
+          href: "/investor",
         },
-        {
-          title: "Kontakt oss",
-          href: "/contact",
-        },
+    
       ],
     },
   ];
@@ -96,9 +85,6 @@ export const Header = () => {
                                 {item.description}
                               </p>
                             </div>
-                            <Button size="sm" className="mt-10">
-                              Book a call today
-                            </Button>
                           </div>
                           <div className="flex flex-col text-sm h-full justify-end">
                             {item.items?.map((subItem) => (

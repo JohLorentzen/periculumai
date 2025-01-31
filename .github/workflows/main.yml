@@ -83,6 +83,7 @@ jobs:
             # Ensure npm and pm2 are installed and accessible
             export PATH="$HOME/.nvm/versions/node/v18.20.3/bin:$PATH"
             npm install
+            npm run build
             pm2 restart nextjs-app || pm2 start npm --name "periculumai" -- start
           EOF
 

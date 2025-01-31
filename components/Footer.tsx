@@ -12,14 +12,6 @@ export const Footer = () => {
       description: "Tjenester vi tilbyr",
       items: [
         {
-          title: "Kunstig Intelligens",
-          href: "/KI",
-        },
-        {
-          title: "Overblikk",
-          href: "/overblikk",
-        },
-        {
           title: "Dashbord",
           href: "/dashboards",
         },
