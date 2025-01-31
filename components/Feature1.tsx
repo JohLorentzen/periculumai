@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 
 export const Feature1 = () => (
   <div className="w-full py-20 lg:py-40">
