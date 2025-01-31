@@ -8,11 +8,11 @@ import { Footer } from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PerliculumAI",
-  description: "Free SaaS website blocks based on React with shadcn & Tailwind",
+  title: "Fehirde",
+  description: "En platform for å samle din formue",
   keywords:
-    "tailwindcss, react, shadcn, design, webdesign, website, saas templates, saas website templates",
-  authors: [{ name: "Tommy Jepsen", url: "https://tommyjepsen.com" }],
+    "Fintech, Norden, KI, AI, Personlig, Formueforvaltning",
+
 };
 
 export default function RootLayout({
