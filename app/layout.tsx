@@ -25,15 +25,11 @@ export default function RootLayout({
       <head>
         <meta
           property="og:title"
-          content="TWBlocks - Free SaaS website blocks"
+          content="Fehirde - Personlig formue forvaltning"
         />
         <meta
           property="og:description"
-          content="Free SaaS website blocks based on React with shadcn & Tailwind"
-        />
-        <meta
-          property="og:image"
-          content="https://raw.githubusercontent.com/tommyjepsen/twblocks/main/public/hero4.png?raw=true"
+          content="En platform for å samle dine kontoer under et tak."
         />
       </head>
       <body className={inter.className}>
