@@ -88,7 +88,10 @@ export function AccountOverview() {
               <TableCell>{account.type}</TableCell>
               <TableCell className="font-mono">{account.value}</TableCell>
               <TableCell>
-                <Badge variant={account.risk >= 4 ? "destructive" : "warning"} className="font-normal">
+                <Badge 
+                  variant={account.risk >= 4 ? "destructive" : "secondary"} 
+                  className={`font-normal ${account.risk >= 4 ? "" : "bg-amber-500 hover:bg-amber-500/80"}`}
+                >
                   {account.risk}
                 </Badge>
               </TableCell>

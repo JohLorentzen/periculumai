@@ -4,11 +4,11 @@ import { useMotionValue, motion, useMotionTemplate } from "framer-motion"
 import { MouseEvent } from "react"
 
 export const EvervaultCard = ({ text }: { text: string }) => {
-  let mouseX = useMotionValue(0)
-  let mouseY = useMotionValue(0)
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    let { left, top } = currentTarget.getBoundingClientRect()
+    const { left, top } = currentTarget.getBoundingClientRect()
     mouseX.set(clientX - left)
     mouseY.set(clientY - top)
   }
