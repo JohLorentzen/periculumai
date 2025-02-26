@@ -72,19 +72,25 @@ jobs:
           REMOTE_HOST="${{ secrets.DEPLOY_HOST }}"
           REMOTE_PROJECT_PATH="/var/www/periculumai"
           SSH_PASS="${{ secrets.DEPLOY_PASSWORD }}"
+          
           # Sync files to the server using rsync with increased verbosity and timeout
           echo "Starting rsync..."
           sshpass -p $SSH_PASS rsync -avz --timeout=600 --delete --exclude='.git' --exclude='node_modules' --no-perms --omit-dir-times $LOCAL_PROJECT_PATH/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_PROJECT_PATH
           echo "rsync completed."
+          
           # Connect to the server to install dependencies and restart the application
           echo "Connecting to server to install dependencies and restart application..."
-          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << 'EOF'
+          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << EOF
             cd $REMOTE_PROJECT_PATH
             # Ensure npm and pm2 are installed and accessible
-            export PATH="$HOME/.nvm/versions/node/v18.20.3/bin:$PATH"
+            export PATH="\$HOME/.nvm/versions/node/v18.20.3/bin:\$PATH"
+            echo "Installing dependencies..."
             npm install
+            echo "Building application..."
             npm run build
-            pm2 restart nextjs-app || pm2 start npm --name "periculumai" -- start
+            echo "Restarting application with PM2..."
+            pm2 restart periculumai || pm2 start npm --name "periculumai" -- start
+            echo "Deployment completed."
           EOF
 
       - name: Completed deployment message
