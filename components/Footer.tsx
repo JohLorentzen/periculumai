@@ -1,42 +1,8 @@
 import Link from "next/link";
+import { navigationLinks } from "@/constants/index";
 
 export const Footer = () => {
-  const navigationItems = [
-    {
-      title: "Hjem",
-      href: "/",
-      description: "",
-    },
-    {
-      title: "Produkter",
-      description: "Tjenester vi tilbyr",
-      items: [
-        {
-          title: "Dashbord",
-          href: "/dashboards",
-        },
-      ],
-    },
-    {
-      title: "Selskap",
-      description: "Intressert i vår visjon",
-      items: [
-        {
-          title: "Om oss",
-          href: "/omoss",
-        },
-        {
-          title: "Tidslinje",
-          href: "/tidslinje",
-        },
-        {
-          title: "Investor",
-          href: "/investor",
-        },
-    
-      ],
-    },
-  ];
+  const navigationItems = navigationLinks;
 
   return (
     <div className="w-full py-20 lg:py-40 bg-muted text-background">
@@ -45,10 +11,10 @@ export const Footer = () => {
           <div className="flex gap-8 flex-col items-start">
             <div className="flex gap-2 flex-col">
               <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-left">
-                Fehirde™
+                Fehirde
               </h2>
               <p className="text-lg max-w-lg leading-relaxed tracking-tight text-background/75 text-left">
-                Personlig, effektiv profersjonell tjenester for din formue
+                Personlige, effektive og profersjonelle tjenester for din formue
               </p>
             </div>
             <div className="flex gap-20 flex-row">
