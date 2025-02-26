@@ -7,17 +7,16 @@ import { Feature2 } from '@/components/Feature2';
 import { FeatureBeam } from '@/components/FeatureBeam';
 
 export default function HomePage() {
-  // Initialize state properly before using it
+  // Use client-side only rendering
   const [mounted, setMounted] = useState(false);
   
-  // Use useEffect to handle client-side mounting
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Only render components after mounting on client
+  // Only render after client-side mount
   if (!mounted) {
-    return null; // Return empty during SSR
+    return <div className="min-h-screen"></div>; // Empty placeholder with height
   }
 
   return (
