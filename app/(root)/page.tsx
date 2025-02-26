@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Hero } from '@/components/Hero'; 
 import { Feature1 } from '@/components/Feature1';
 import { Feature2 } from '@/components/Feature2';
-import { FeatureBeam } from '@/components/FeatureBeam';
+
 
 export default function HomePage() {
   // Use client-side only rendering
@@ -24,7 +24,6 @@ export default function HomePage() {
       <Hero />
       <Feature1 />
       <Feature2 />
-      <FeatureBeam />
     </div>
   );
 }
