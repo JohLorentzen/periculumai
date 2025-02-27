@@ -27,7 +27,7 @@ export const Hero = () => {
   return (
     <div className="w-full ">
       <AnimatedGridPattern
-        className="absolute inset-0 opacity-40 skew-x-12 text-secondary"
+        className="absolute inset-0 opacity-40  text-secondary"
         x={-1}
         y={-1}
         width={32}
