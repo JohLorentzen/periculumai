@@ -45,15 +45,20 @@ export function ChartContainer({
   )
 }
 
+// Define a more specific type for the payload item
+interface PayloadItem {
+  name: string
+  value: number
+  payload: {
+    [key: string]: unknown
+    fill?: string
+  }
+  color?: string
+}
+
 interface ChartTooltipContentProps {
   active?: boolean
-  payload?: {
-    name: string
-    value: number
-    payload: {
-      [key: string]: any
-    }
-  }[]
+  payload?: PayloadItem[]
   label?: string
   formatter?: (value: number) => string
   labelFormatter?: (label: string) => string
@@ -114,7 +119,6 @@ export function ChartTooltip({
 function Tooltip({
   content,
   cursor = true,
-  ...props
 }: TooltipProps<ValueType, NameType>) {
   return (
     <React.Fragment>
