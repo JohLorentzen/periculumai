@@ -27,14 +27,16 @@ export const Hero = () => {
   return (
     <div className="w-full ">
       <AnimatedGridPattern
-        className="absolute inset-0 opacity-40  text-secondary"
+        className="absolute text-secondary"
         x={-1}
         y={-1}
         width={32}
         height={32}
         strokeDashoffset={0}
-        strokeWidth={1.5}
+        strokeWidth={1.0}
+        maxOpacity={0.40}
         strokeDasharray={0}
+
       />
       <div className="container mx-auto relative">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">

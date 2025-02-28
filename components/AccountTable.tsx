@@ -8,8 +8,10 @@ interface Account {
   platform: string;
   type: string;
   value: string;
+  valueNumber: number;
   risk: number;
   return: string;
+  percentChange: number;
   allocation: number;
 }
 
@@ -27,6 +29,7 @@ export function AccountTable({ accounts }: AccountTableProps) {
           <TableHead>Kontotype</TableHead>
           <TableHead>Kontoverdi</TableHead>
           <TableHead>Riskorating</TableHead>
+          <TableHead>Allokering</TableHead>
           <TableHead className="text-right">Avkastning</TableHead>
         </TableRow>
       </TableHeader>
@@ -48,6 +51,9 @@ export function AccountTable({ accounts }: AccountTableProps) {
               >
                 {account.risk}
               </Badge>
+            </TableCell>
+            <TableCell className="font-medium">
+              {account.allocation}%
             </TableCell>
             <TableCell className="text-right font-medium text-green-600">
               {account.return}

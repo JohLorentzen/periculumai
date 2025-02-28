@@ -29,7 +29,11 @@ export default function RootLayout({
         />
         <meta
           property="og:description"
-          content="En platform for å samle dine kontoer under et tak."
+          content="En platform for å forvalte din formue."
+        />
+        <meta
+          property="og:image"
+          content="public/logo.png"
         />
       </head>
       <body className={inter.className}>

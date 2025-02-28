@@ -14,15 +14,82 @@ import { useState } from "react";
 import Link from "next/link";
 import ModeToggle from "@/components/ui/mode-toggle";
 import { navigationLinks } from "@/constants/index";
-import { SignicatService } from '@/lib/services/signicat';
 
 export const Header = () => {
   const navigationItems = navigationLinks;
 
   const [isOpen, setOpen] = useState(false);
 
-  const handleLogin = () => {
-    const authUrl = SignicatService.getAuthorizationUrl();
+  // Generate a random string for the code verifier
+  const generateCodeVerifier = (): string => {
+    // Generate a random string of 43-128 characters (we're using 64)
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+    let result = '';
+    const charactersLength = characters.length;
+    
+    for (let i = 0; i < 64; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    
+    return result;
+  };
+
+  // Create a code challenge from the verifier (SHA-256 method)
+  const generateCodeChallenge = async (verifier: string): Promise<string> => {
+    // Convert verifier to a SHA-256 hash
+    const encoder = new TextEncoder();
+    const data = encoder.encode(verifier);
+    const digest = await window.crypto.subtle.digest('SHA-256', data);
+    
+    // Convert to base64 URL encoded string
+    const bytes = new Uint8Array(digest);
+    const base64 = btoa(String.fromCharCode.apply(null, Array.from(bytes)));
+    
+    return base64
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+  };
+
+  const handleLogin = async () => {
+    // Generate PKCE code verifier and challenge
+    const codeVerifier = generateCodeVerifier();
+    const codeChallenge = await generateCodeChallenge(codeVerifier);
+    
+    // Store the code verifier as a cookie for the server to use
+    document.cookie = `pkce_code_verifier=${codeVerifier}; path=/`;
+    
+    // Construct the Signicat authorization URL with required parameters
+    const signicatBaseUrl = process.env.NEXT_PUBLIC_SIGNICAT_BASE_URL || 'https://fehirde.sandbox.signicat.com/auth/open/connect/authorize';
+    const clientId = process.env.NEXT_PUBLIC_SIGNICAT_CLIENT_ID || 'sandbox-smoggy-throat-119';
+    const redirectUri = process.env.NEXT_PUBLIC_SIGNICAT_REDIRECT_URI || 'http://localhost:3000/api/auth/callback';
+    
+    // Use a simplified scope that is likely to be permitted
+    // Start with just "openid" which is the basic required scope
+    const scope = 'openid';
+    
+    // Generate a simple random state parameter
+    // Instead of using JSON encoding which might cause issues
+    const stateValue = Math.random().toString(36).substring(2, 15);
+    
+    // Store the state in a cookie for validation during callback
+    document.cookie = `auth_state=${stateValue}; path=/`;
+    
+    // Manual URL construction to ensure exact format matching documentation
+    const authUrl = `${signicatBaseUrl}?` +
+      `client_id=${encodeURIComponent(clientId)}` +
+      `&response_type=code` +
+      `&scope=${encodeURIComponent(scope)}` +
+      `&prompt=login` +
+      `&acr_values=${encodeURIComponent('idp:nbid nbid_idp:BID')}` +
+      `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+      `&code_challenge=${encodeURIComponent(codeChallenge)}` +
+      `&code_challenge_method=S256` +
+      `&state=${encodeURIComponent(stateValue)}`;
+    
+    console.log(`Redirecting to: ${authUrl}`);
+    
+    // Redirect to the authorization URL
     window.location.href = authUrl;
   };
 
@@ -83,7 +150,7 @@ export const Header = () => {
         <div className="flex justify-end w-full gap-4">
           <ModeToggle />
           <div className="border-r hidden md:inline"></div>
-          <Button variant="outline" onClick={handleLogin}>Logg in</Button>
+          <Button variant="outline" onClick={handleLogin}>Logg inn</Button>
           <Button>Kom i gang</Button>
         </div>
         <div className="flex w-12 shrink lg:hidden items-end justify-end">

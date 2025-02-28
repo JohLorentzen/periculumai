@@ -24,6 +24,13 @@
     --input: 197 100% 20%;
     --ring: 196 98% 53%;
     --radius: 0.5rem;
+    
+    /* Chart colors */
+    --chart-1: 0 95% 56%;      /* Red: #EF2B2D */
+    --chart-2: 213 100% 41%;   /* Blue: #002868 */
+    --chart-3: 0 0% 100%;      /* White: #FFFFFF */
+    --chart-4: 161 95% 45%;    /* Green */
+    --chart-5: 43 95% 60%;     /* Yellow */
   }
  
   .dark {
@@ -46,6 +53,13 @@
     --border: 195 100% 60%;
     --input: 195 100% 80%;
     --ring: 196 98% 47%;
+    
+    /* Chart colors - slightly adjusted for dark mode */
+    --chart-1: 0 95% 56%;      /* Red: #EF2B2D */
+    --chart-2: 213 100% 41%;   /* Blue: #002868 */
+    --chart-3: 0 0% 100%;      /* White: #FFFFFF */
+    --chart-4: 161 95% 45%;    /* Green */
+    --chart-5: 43 95% 60%;     /* Yellow */
   }
 }
 
