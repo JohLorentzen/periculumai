@@ -1,6 +1,11 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import "@/app/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+}
 
 export const metadata: Metadata = {
   title: "Fehirde",
@@ -14,6 +19,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="no">
+      <head>
+        {/* Force browsers to load CSS with proper MIME type */}
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        {/* Force CSS reload to avoid caching issues */}
+        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta httpEquiv="Pragma" content="no-cache" />
+        <meta httpEquiv="Expires" content="0" />
+      </head>
       <body>
         <ThemeProvider
           attribute="class"
