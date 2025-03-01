@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_URL || 'https://fehirde.no',
+  // Only use assetPrefix in production, use relative paths in development
+  assetPrefix: process.env.NODE_ENV === 'production' 
+    ? (process.env.NEXT_PUBLIC_BASE_URL || 'https://fe-hirde.no')
+    : undefined,
   output: 'standalone', // Enable standalone output for Docker
   async headers() {
     return [
