@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
@@ -30,20 +30,13 @@ jobs:
         run: npm run build
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: built-app
           path: |
             .next/
             public/
             app/
-            components/
-            Dockerfile
-            docker-compose.yml
-            traefik/
-            deploy.sh
-            server-setup.sh
-            fix-server.sh
 
   deploy:
     needs: build
@@ -51,10 +44,10 @@ jobs:
     if: github.ref == 'refs/heads/main' && needs.build.result == 'success'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: built-app
           path: .
@@ -79,26 +72,19 @@ jobs:
           REMOTE_HOST="${{ secrets.DEPLOY_HOST }}"
           REMOTE_PROJECT_PATH="/var/www/periculumai"
           SSH_PASS="${{ secrets.DEPLOY_PASSWORD }}"
-          
           # Sync files to the server using rsync with increased verbosity and timeout
           echo "Starting rsync..."
           sshpass -p $SSH_PASS rsync -avz --timeout=600 --delete --exclude='.git' --exclude='node_modules' --no-perms --omit-dir-times $LOCAL_PROJECT_PATH/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_PROJECT_PATH
           echo "rsync completed."
-          
-          # Make scripts executable
-          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << EOF
+          # Connect to the server to install dependencies and restart the application
+          echo "Connecting to server to install dependencies and restart application..."
+          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << 'EOF'
             cd $REMOTE_PROJECT_PATH
-            chmod +x deploy.sh
-            chmod +x server-setup.sh
-            chmod +x fix-server.sh
-          EOF
-          
-          # Run the fix-server script to ensure Docker Compose is installed
-          echo "Running fix-server.sh to check Docker environment..."
-          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << EOF
-            cd $REMOTE_PROJECT_PATH
-            ./fix-server.sh
+            # Ensure npm and pm2 are installed and accessible
+            export PATH="$HOME/.nvm/versions/node/v18.20.3/bin:$PATH"
+            npm install
+            pm2 restart nextjs-app || pm2 start npm --name "periculumai" -- start
           EOF
 
       - name: Completed deployment message
-        run: echo "Deployed app to server using Docker"
+        run: echo "Deployed app to server"
