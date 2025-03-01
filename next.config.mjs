@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_URL || 'https://fehirde.no',
+  output: 'standalone', // Enable standalone output for Docker
   async headers() {
     return [
       {

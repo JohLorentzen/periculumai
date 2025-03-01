@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  nextjs:
+    container_name: fehirde-nextjs
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_BASE_URL=https://fehirde.no
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health || exit 1"]
+      interval: 60s
+      retries: 3
+      timeout: 5s
+    networks:
+      - fehirde_network
+
+  # Optional: Add a reverse proxy container like Traefik
+  traefik:
+    container_name: fehirde-traefik
+    image: traefik:v2.10
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/config:/etc/traefik/config:ro
+      - ./traefik/acme:/etc/traefik/acme
+    networks:
+      - fehirde_network
+
+networks:
+  fehirde_network:
+    name: fehirde_network 
