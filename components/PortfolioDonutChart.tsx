@@ -1,7 +1,6 @@
 "use client"
 
-import { useEffect } from "react";
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip, Legend } from "recharts"
+import { Pie, PieChart, ResponsiveContainer, Tooltip, Legend, Cell } from "recharts"
 
 
 import {
@@ -37,28 +36,17 @@ export function Component({
   config, 
   timeframe = "Oktober 2024" 
 }: PortfolioDonutChartProps) {
-  // Debug logs
-  useEffect(() => {
-    console.log("Chart data:", data);
-    console.log("Chart config:", config);
-  }, [data, config]);
-
   // Format data for the chart
   const chartData = data.map((item, index) => {
     // Try to get color from config
     const categoryConfig = config[item.category];
     const configColor = categoryConfig?.color;
     
-    // More detailed logging for debugging
-    console.log(`Category: ${item.category}, Config color: ${configColor}, Fallback: ${FALLBACK_COLORS[index % FALLBACK_COLORS.length]}`);
-    
     return {
       ...item,
       fill: item.fill || configColor || FALLBACK_COLORS[index % FALLBACK_COLORS.length]
     };
   });
-
-
 
   // Create a custom tooltip formatter
   const formatTooltip = (value: number) => {
