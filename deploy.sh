@@ -15,7 +15,7 @@ docker-compose build --no-cache
 docker-compose up -d
 
 echo "Deployment completed!"
-echo "Your site should be available at https://fehirde.no"
+echo "Your site should be available at https://fe-hirde.no"
 echo "It may take a few minutes for the SSL certificates to be issued."
 
 # Check if containers are running

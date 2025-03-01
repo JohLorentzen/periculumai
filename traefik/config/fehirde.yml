@@ -1,16 +1,16 @@
 http:
   routers:
-    fehirde:
-      rule: "Host(`fehirde.no`) || Host(`www.fehirde.no`)"
-      service: fehirde
+    fe-hirde:
+      rule: "Host(`fe-hirde.no`) || Host(`www.fe-hirde.no`)"
+      service: fe-hirde
       entryPoints:
         - websecure
       tls:
         certResolver: letsencrypt
     
-    # Redirect fe-hirde.no to fehirde.no
-    fe-hirde-redirect:
-      rule: "Host(`fe-hirde.no`) || Host(`www.fe-hirde.no`)"
+    # Redirect fehirde.no to fe-hirde.no
+    fehirde-redirect:
+      rule: "Host(`fehirde.no`) || Host(`www.fehirde.no`)"
       service: noop@internal
       entryPoints:
         - websecure
@@ -20,7 +20,7 @@ http:
         - fehirde-redirect
 
   services:
-    fehirde:
+    fe-hirde:
       loadBalancer:
         servers:
           - url: "http://nextjs:3000"
@@ -29,6 +29,6 @@ http:
   middlewares:
     fehirde-redirect:
       redirectRegex:
-        regex: "^https://fe-hirde.no/(.*)"
-        replacement: "https://fehirde.no/${1}"
+        regex: "^https://fehirde.no/(.*)"
+        replacement: "https://fe-hirde.no/${1}"
         permanent: true 
