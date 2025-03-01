@@ -23,7 +23,7 @@ export default function RootLayout({
         {/* Force browsers to load CSS with proper MIME type */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
-        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        {/* Don't hardcode CSS paths, Next.js handles this automatically */}
         {/* Force CSS reload to avoid caching issues */}
         <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
         <meta httpEquiv="Pragma" content="no-cache" />

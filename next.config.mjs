@@ -4,6 +4,8 @@ const nextConfig = {
   assetPrefix: process.env.NODE_ENV === 'production' 
     ? (process.env.NEXT_PUBLIC_BASE_URL || 'https://fe-hirde.no')
     : undefined,
+  // Add crossOrigin for proper loading of assets
+  crossOrigin: 'anonymous',
   output: 'standalone', // Enable standalone output for Docker
   async headers() {
     return [
