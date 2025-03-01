@@ -37,10 +37,13 @@ jobs:
             .next/
             public/
             app/
+            components/
             Dockerfile
             docker-compose.yml
             traefik/
             deploy.sh
+            server-setup.sh
+            fix-server.sh
 
   deploy:
     needs: build
@@ -82,31 +85,19 @@ jobs:
           sshpass -p $SSH_PASS rsync -avz --timeout=600 --delete --exclude='.git' --exclude='node_modules' --no-perms --omit-dir-times $LOCAL_PROJECT_PATH/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_PROJECT_PATH
           echo "rsync completed."
           
-          # Connect to the server to deploy using Docker
-          echo "Connecting to server to deploy with Docker..."
+          # Make scripts executable
           sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << EOF
             cd $REMOTE_PROJECT_PATH
-            
-            # Make deploy script executable
             chmod +x deploy.sh
-            
-            # Create necessary directories
-            mkdir -p traefik/acme
-            mkdir -p traefik/config
-            
-            # Ensure acme.json has correct permissions
-            touch traefik/acme/acme.json
-            chmod 600 traefik/acme/acme.json
-            
-            # Build and start Docker containers
-            docker-compose down || true
-            docker-compose build --no-cache
-            docker-compose up -d
-            
-            # Check if containers are running
-            docker-compose ps
-            
-            echo "Docker deployment completed successfully."
+            chmod +x server-setup.sh
+            chmod +x fix-server.sh
+          EOF
+          
+          # Run the fix-server script to ensure Docker Compose is installed
+          echo "Running fix-server.sh to check Docker environment..."
+          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << EOF
+            cd $REMOTE_PROJECT_PATH
+            ./fix-server.sh
           EOF
 
       - name: Completed deployment message
