@@ -31,6 +31,14 @@
     --chart-3: 0 0% 100%;      /* White: #FFFFFF */
     --chart-4: 161 95% 45%;    /* Green */
     --chart-5: 43 95% 60%;     /* Yellow */
+    
+    /* Platform colors */
+    --platform-nordnet: 0 0% 0%;           /* #000000 */
+    --platform-kron: 270 100% 94%;         /* #f0deff */
+    --platform-dnb: 183 63% 22%;           /* #14555a */
+    --platform-sparebank1: 208 100% 32%;   /* #005aa4 */
+    --platform-firi: 239 87% 60%;          /* #474AEE */
+    --platform-default: 291 75% 42%;       /* #9C27B0 */
   }
  
   .dark {
@@ -60,6 +68,13 @@
     --chart-3: 0 0% 100%;      /* White: #FFFFFF */
     --chart-4: 161 95% 45%;    /* Green */
     --chart-5: 43 95% 60%;     /* Yellow */
+
+    --platform-nordnet: 0 0% 0%;           /* #000000 */
+    --platform-kron: 270 100% 94%;         /* #f0deff */
+    --platform-dnb: 183 63% 22%;           /* #14555a */
+    --platform-sparebank1: 208 100% 32%;   /* #005aa4 */
+    --platform-firi: 239 87% 60%;          /* #474AEE */
+    --platform-default: 291 75% 42%;       /* #9C27B0 */
   }
 }
 

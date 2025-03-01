@@ -2,22 +2,24 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-
-interface Account {
-  name: string;
-  platform: string;
-  type: string;
-  value: string;
-  valueNumber: number;
-  risk: number;
-  return: string;
-  percentChange: number;
-  allocation: number;
-}
+import { Account } from "@/lib/types/account"
 
 interface AccountTableProps {
   accounts: Account[];
 }
+
+// Map platform names to Tailwind classes
+const getPlatformClass = (platform: string): string => {
+  const platformMap: Record<string, string> = {
+    "Nordnet": "bg-platform-nordnet text-white",
+    "Kron": "bg-platform-kron text-black",
+    "DNB": "bg-platform-dnb text-white",
+    "Sparebank 1": "bg-platform-sparebank1 text-white",
+    "Firi": "bg-platform-firi text-white",
+  };
+  
+  return platformMap[platform] || "bg-platform-default text-white";
+};
 
 export function AccountTable({ accounts }: AccountTableProps) {
   return (
@@ -38,7 +40,10 @@ export function AccountTable({ accounts }: AccountTableProps) {
           <TableRow key={`${account.name}-${account.platform}`}>
             <TableCell className="font-medium">{account.name}</TableCell>
             <TableCell>
-              <Badge variant={account.platform === "Nordnet" ? "default" : "secondary"} className="font-normal">
+              <Badge 
+                variant="outline" 
+                className={`font-normal ${getPlatformClass(account.platform)}`}
+              >
                 {account.platform}
               </Badge>
             </TableCell>

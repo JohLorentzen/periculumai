@@ -1,86 +1,77 @@
 "use client"
-
-import { Pie, PieChart, ResponsiveContainer, Tooltip, Legend, Cell } from "recharts"
-
+import { Pie, PieChart, ResponsiveContainer, Tooltip, TooltipProps } from "recharts"
+import { PortfolioChartItem } from "@/lib/types/account"
 
 import {
   Card,
   CardContent,
   CardDescription,
-
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { 
-  ChartConfig,
-} from "@/components/ui/chart"
 
 // Fallback colors if config doesn't provide colors
-const FALLBACK_COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))", "hsl(var(--chart-5))"];
-
-interface PortfolioChartItem {
-  category: string;
-  allocation: number;
-  fill?: string;  // Made optional
-}
+const FALLBACK_COLORS = ["#EF2B2D", "#002868", "#FFFFFF", "#14B37D", "#F5A623"];
 
 interface PortfolioDonutChartProps {
   data: PortfolioChartItem[];
-  config: ChartConfig;
-  trendingPercentage?: number;
   timeframe?: string;
 }
 
+// Type for the custom tooltip
+type CustomTooltipProps = TooltipProps<number, string> & {
+  active?: boolean;
+  payload?: Array<{ payload: PortfolioChartItem }>;
+};
+
 export function Component({ 
   data, 
-  config, 
-  timeframe = "Oktober 2024" 
+  timeframe,
 }: PortfolioDonutChartProps) {
-  // Format data for the chart
-  const chartData = data.map((item, index) => {
-    // Try to get color from config
-    const categoryConfig = config[item.category];
-    const configColor = categoryConfig?.color;
-    
-    return {
-      ...item,
-      fill: item.fill || configColor || FALLBACK_COLORS[index % FALLBACK_COLORS.length]
-    };
-  });
-
-  // Create a custom tooltip formatter
-  const formatTooltip = (value: number) => {
-    return `${value}%`;
+  
+  // Format data for the chart and add colors
+  const chartData = data.map((item, index) => ({
+    ...item,
+    // Ensure fill is a valid color value
+    fill: item.fill || FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+  }));
+  
+  // Custom tooltip component
+  const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+    if (active && payload && payload.length) {
+      const item = payload[0].payload;
+      return (
+        <div className="bg-background border p-2 rounded-md shadow-md">
+          <p className="font-medium">{item.name}</p>
+          <p>Verdi: {item.valueNumber.toLocaleString('no-NO')} kr</p>
+          <p>Avkastning: {item.return >= 0 ? '+' : ''}{item.return.toFixed(2)}%</p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
-    <Card className="flex flex-col h-full">
+    <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>Porteføljefordeling</CardTitle>
         <CardDescription>{timeframe}</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <div className="h-[250px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+      <CardContent className="">
+        <div className="mx-auto aspect-square">
+          <ResponsiveContainer >
             <PieChart>
-              <Tooltip formatter={formatTooltip} />
-              <Legend />
+              <Tooltip content={<CustomTooltip />} />
               <Pie
                 data={chartData}
-                dataKey="allocation"
-                nameKey="category"
+                dataKey="valueNumber"
+                nameKey="name"
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={80}
-                paddingAngle={5}
+                innerRadius={40}
+                outerRadius={120}
+
               >
-                {chartData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.fill} 
-                  />
-                ))}
               </Pie>
             </PieChart>
           </ResponsiveContainer>

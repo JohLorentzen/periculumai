@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="no">
+    <html lang="no" suppressHydrationWarning>
       <head>
         {/* Force browsers to load CSS with proper MIME type */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -29,7 +29,7 @@ export default function RootLayout({
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -25,35 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <meta
-          property="og:title"
-          content="Fehirde - Personlig formue forvaltning"
-        />
-        <meta
-          property="og:description"
-          content="En platform for å forvalte din formue."
-        />
-        <meta
-          property="og:image"
-          content="/logo.png" 
-        />
-      </head>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          
-
-          {children}
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
+    <>
+      <Header />
+      <main className={inter.className}>
+        {children}
+      </main>
+      <Footer />
+    </>
   );
 }

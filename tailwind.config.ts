@@ -53,7 +53,15 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3) / <alpha-value>)',
   				'4': 'hsl(var(--chart-4) / <alpha-value>)',
   				'5': 'hsl(var(--chart-5) / <alpha-value>)'
-  			}
+  			},
+        platform: {
+          'nordnet': 'hsl(var(--platform-nordnet) / <alpha-value>)',
+          'kron': 'hsl(var(--platform-kron) / <alpha-value>)',
+          'dnb': 'hsl(var(--platform-dnb) / <alpha-value>)',
+          'sparebank1': 'hsl(var(--platform-sparebank1) / <alpha-value>)',
+          'firi': 'hsl(var(--platform-firi) / <alpha-value>)',
+          'default': 'hsl(var(--platform-default) / <alpha-value>)'
+        }
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
